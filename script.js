@@ -20,7 +20,7 @@ const game = new Phaser.Game(config);
 function preload() {
     this.load.image('bg-game', 'lobby-forest.jpg');
     this.load.image('hero', 'player cowo.png');
-    this.load.image('gate', 'Question box.png');
+    this.load.image('gate', 'question box.png');
 }
 
 function create() {
@@ -96,4 +96,5 @@ function setupMobileControls() {
             btn.onpointerup = () => player.setVelocity(0);
         }
     });
+
 }
