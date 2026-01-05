@@ -1,71 +1,42 @@
 body { margin: 0; padding: 0; overflow: hidden; background: #000; font-family: 'Arial', sans-serif; }
 
-/* --- BACKGROUND LOBBY (BEDA DENGAN GAME) --- */
+/* Lobby Screen */
 #lobby-screen {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    /* Ganti assets/lobby-bg.png dengan nama file gambar lobby kamu */
-    background-image: url('lobby-forest.jpg'); 
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    position: fixed; width: 100%; height: 100%;
+    background-image: url('lobby-forest.jpg'); background-size: cover; background-position: center;
+    display: flex; justify-content: center; align-items: center; z-index: 3000;
 }
 
 .lobby-card {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    border: 5px solid #27ae60;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 20px;
+    border: 5px solid #27ae60; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- JOYSTICK / KONTROL HP (DIPERBAIKI) --- */
-#mobile-controls {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.btn-start {
+    background: #27ae60; color: white; border: none; padding: 15px 30px;
+    font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold;
 }
 
-.row { display: flex; justify-content: center; }
-
-.ctrl-btn {
-    width: 60px;
-    height: 60px;
-    margin: 3px;
-    background: rgba(255, 255, 255, 0.5);
-    border: 2px solid white;
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Joystick di Kiri Bawah */
+#joystick-container {
+    position: fixed; bottom: 40px; left: 40px;
+    width: 120px; height: 120px; z-index: 2000; touch-action: none;
 }
 
-.jump-btn { width: 100px; background: #f1c40f; }
+/* Tombol Lompat Bulat di Kanan Bawah */
+#jump-btn-mobile {
+    position: fixed; bottom: 60px; right: 40px;
+    width: 85px; height: 85px; border-radius: 50%;
+    background: #f1c40f; color: white; border: 4px solid white;
+    font-weight: bold; z-index: 2000; touch-action: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: block;
+}
 
-/* UI KUIS */
+/* Modal Kuis */
 .hidden { display: none !important; }
 #quiz-modal {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2000;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    border: 4px solid #f1c40f;
-    width: 80%;
-    max-width: 350px;
-
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    z-index: 4000; background: white; padding: 25px; border-radius: 15px;
+    text-align: center; border: 4px solid #f1c40f; width: 85%; max-width: 350px;
 }
+
