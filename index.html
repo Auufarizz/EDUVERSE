@@ -3,48 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hoax Hunter Maze</title>
+    <title>EduVerse - Hoax Hunter</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 </head>
 <body>
 
     <div id="lobby-screen">
         <div class="lobby-card">
-            <h1>FAKTA ATAU HOAX?</h1>
-            <p>Belajar sambil bermain</p>
-            <button onclick="mulaiGame()">MULAI PETUALANGAN</button>
+            <h1>EDUVERSE</h1>
+            <p>Literasi Media Sosial</p>
+            <button class="btn-start" onclick="mulaiGame()">MULAI PETUALANGAN</button>
         </div>
     </div>
 
     <div id="quiz-modal" class="hidden">
         <div class="modal-content">
             <h3 id="q-level">TANTANGAN</h3>
-            <p id="q-text">Isi Berita...</p>
+            <p id="q-text">Sedang memuat pertanyaan...</p>
             <div class="options">
                 <button onclick="jawab('fakta')" class="btn-fakta">✅ FAKTA</button>
                 <button onclick="jawab('hoax')" class="btn-hoax">❌ HOAX</button>
             </div>
             <div id="feedback" class="hidden">
                 <p id="feedback-text"></p>
-                <button onclick="lanjutJalan()" class="btn-next">Buka Jalan ➔</button>
+                <button onclick="lanjutJalan()" class="btn-next">Lanjutkan ➔</button>
             </div>
         </div>
     </div>
 
-    <div id="mobile-controls">
-        <div class="row">
-            <button id="up" class="ctrl-btn">▲</button>
-        </div>
-        <div class="row">
-            <button id="left" class="ctrl-btn">◀</button>
-            <button id="jump" class="ctrl-btn jump-btn">LOMPAT</button>
-            <button id="right" class="ctrl-btn">▶</button>
-        </div>
-        <div class="row">
-            <button id="down" class="ctrl-btn">▼</button>
-        </div>
-    </div>
+    <div id="joystick-container"></div>
+    <button id="jump-btn-mobile" onpointerdown="window.loncatVisual()">LOMPAT</button>
 
     <div id="game-container"></div>
 
