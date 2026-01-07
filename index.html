@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Hoax Hunter Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.1/nipplejs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+<body>
+    <div id="lobby-screen" style="position:fixed; top:0; left:0; width:100%; height:100%; background:url('lobby-forest.jpg') center/cover; display:flex; justify-content:center; align-items:center; z-index:9000;">
+        <div style="background:white; padding:40px; border-radius:30px; text-align:center; width:85%; max-width:400px; border:8px solid #f1c40f;">
+            <h1 style="margin:0; font-size:32px;">HOAX HUNTER</h1>
+            <p style="font-weight:700; color:#7f8c8d; margin-bottom:30px;">BASMI BERITA PALSU</p>
+            <button class="btn-next" style="border-radius:50px; margin-top:0;" onclick="mulaiGame()">MULAI BERMAIN</button>
+            <button class="btn-next" style="background:#3498db; border-radius:50px;" onclick="bukaLiterasi()">LITERASI DIGITAL</button>
+        </div>
+    </div>
+
+    <div id="ui-container-left" class="hidden">
+        <div class="ui-pill"><span>📝</span> SKOR: <span id="score-display">0</span></div>
+        <select id="level-dropdown" class="level-select" onchange="pilihLevelManual(this.value)">
+            <option value="1">LVL 1</option>
+            <option value="2">LVL 2</option>
+            <option value="3">LVL 3</option>
+            <option value="4">LVL 4</option>
+            <option value="5">LVL 5</option>
+        </select>
+    </div>
+
+    <div id="top-nav-right" class="hidden">
+        <div class="nav-btn rank" onclick="bukaPeringkat()"><span>🏆</span> PERINGKAT</div>
+        <div class="nav-btn profile" onclick="bukaEditProfil()"><span>👤</span> PROFIL</div>
+    </div>
+
+    <div id="literasi-modal" class="hidden">
+        <div class="wiki-header">
+            <span style="font-weight:900; font-size:18px;">📖 PORTAL LITERASI DIGITAL</span>
+            <button style="background:#e74c3c; color:white; border:none; padding:10px 20px; border-radius:30px; cursor:pointer;" onclick="tutupLiterasi()">TUTUP</button>
+        </div>
+        <div class="wiki-body">
+            <div class="wiki-sidebar">
+                <div id="menu-cek-hoax" class="wiki-menu-item active" onclick="showWiki('cek-hoax')">CARA CEK HOAKS</div>
+                <div id="menu-belajar" class="wiki-menu-item" onclick="showWiki('belajar')">PILAR LITERASI</div>
+                <div id="menu-tips" class="wiki-menu-item" onclick="showWiki('tips')">KEAMANAN DATA</div>
+            </div>
+            <div class="wiki-content-area">
+                <div id="content-cek-hoax" class="wiki-page active">
+                    <h1>Cara Cek Hoaks Secara Mandiri</h1>
+                    <p>Langkah pertama adalah dengan tidak langsung mempercayai informasi yang bersifat provokatif atau sensasional. Hoaks seringkali dirancang untuk memicu emosi yang kuat.</p>
+                </div>
+                <div id="content-belajar" class="wiki-page">
+                    <h1>Empat Pilar Literasi Digital</h1>
+                    <p><b>1. Digital Skills:</b> Mengoperasikan perangkat digital.<br><b>2. Digital Culture:</b> Wawasan kebangsaan di internet.</p>
+                </div>
+                <div id="content-tips" class="wiki-page">
+                    <h1>Keamanan Data Pribadi</h1>
+                    <p>Jangan pernah memberikan kode OTP atau kata sandi kepada siapapun. Gunakan 2FA (Two Factor Authentication).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 style="margin-top:0;">🏆 TOP HUNTER</h2>
+            <div id="rank-list" style="max-height:280px; overflow-y:auto; margin-bottom:15px;"></div>
+            <button class="btn-next" style="background:#34495e" onclick="tutupPeringkat()">KEMBALI</button>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>👤 EDIT PROFIL</h2>
+            <input type="text" id="input-nama" placeholder="Nama...">
+            <div class="avatar-grid" style="display:flex; justify-content:center; gap:10px; margin:15px 0;">
+                <div class="avatar-option active" style="width:70px; height:70px; border:3px solid #ddd; border-radius:10px; cursor:pointer;" onclick="pilihAvatar(0, this)"><img src="player cowo.png" style="width:100%"></div>
+                <div class="avatar-option" style="width:70px; height:70px; border:3px solid #ddd; border-radius:10px; cursor:pointer;" onclick="pilihAvatar(1, this)"><img src="player cewe.png" style="width:100%"></div>
+            </div>
+            <button class="btn-next" onclick="simpanProfil()">SIMPAN</button>
+            <button class="btn-cancel-red" onclick="tutupEditProfil()">BATAL</button>
+        </div>
+    </div>
+
+    <div id="quiz-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="q-text"></h3>
+            <div id="quiz-options">
+                <button onclick="jawab('fakta')" class="btn-next" style="background:#2ecc71;">FAKTA</button>
+                <button onclick="jawab('hoax')" class="btn-next" style="background:#e74c3c;">HOAX</button>
+            </div>
+            <div id="feedback" class="hidden">
+                <p id="feedback-text"></p>
+                <button class="btn-next" onclick="tutupKuis()">LANJUT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="joystick-container"></div>
+    <div id="game-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
